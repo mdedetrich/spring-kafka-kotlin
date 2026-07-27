@@ -1,0 +1,85 @@
+version: 2
+
+# ignore rules below classify by dependency-name (group:artifact, resolved from each alias's `module =`
+# entry), not by alias, so a rule applies uniformly across every alias pinning that artifact:
+# - critical: a direct runtime/functional dependency (spring-kafka, spring-aop, aspectjweaver,
+#   kotlinx-coroutines-*, the org.jetbrains.kotlin.jvm compiler plugin) -- only patch updates are allowed
+#   (minor and major both ignored), since a minor/major bump on any of these can change behavior this
+#   project's coroutine wrappers depend on matching exactly.
+# - also patch-only, but NOT because they're critical themselves: org.jetbrains.kotlin.plugin.spring and
+#   org.jetbrains.kotlin.plugin.allopen. Neither actually affects any shipped module's runtime behavior --
+#   plugin.spring is only applied in 3.2/3.3 and only used by their own test source (@Configuration/
+#   @Component classes proving Spring integration, not present in any main source); plugin.allopen is only
+#   applied in benchmarks/benchmarks-compat, never in a real spring-kafka-kotlin-* module. They're
+#   patch-only purely because they share version.ref = "kotlin" in the catalog with org.jetbrains.kotlin.jvm
+#   above -- all three are the same Kotlin release under different plugin ids, so they must move in
+#   lockstep with it rather than potentially drifting to a different minor/major Kotlin version.
+# - non-critical: a test-only or pure-tooling dependency (junit-bom, ktlint, kotlinx-benchmark/
+#   kotlinx-benchmark-runtime, palantir-git-version, vanniktech-maven-publish) -- minor updates are
+#   allowed too, only major is ignored.
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # critical: direct runtime/functional dependencies, patch only
+      - dependency-name: "org.springframework.kafka:spring-kafka"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.springframework:spring-aop"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.aspectj:aspectjweaver"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.jetbrains.kotlinx:kotlinx-coroutines-core"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.jetbrains.kotlin.jvm"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+      # patch-only because they share version.ref = "kotlin" with org.jetbrains.kotlin.jvm above, not
+      # because they're critical in their own right -- see comment at the top of this file.
+      - dependency-name: "org.jetbrains.kotlin.plugin.spring"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.jetbrains.kotlin.plugin.allopen"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # Also shares version.ref = "kotlin" -- gradle/libs.versions.toml lives under this directory, so
+      # Dependabot's root-directory scan sees this catalog entry too (even though only build-logic's own
+      # build.gradle.kts actually uses it). Without this rule here as well, Dependabot treated it as
+      # ungated from the root scan and bumped the whole "kotlin" version key past patch to satisfy it,
+      # dragging org.jetbrains.kotlin.jvm/plugin.spring/plugin.allopen along -- must be ignored in BOTH
+      # this update entry and the /build-logic one below, not just one.
+      - dependency-name: "org.jetbrains.kotlin:kotlin-gradle-plugin"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+      # non-critical: test framework / pure tooling, minor allowed
+      - dependency-name: "org.junit:junit-bom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.jlleitschuh.gradle.ktlint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.jetbrains.kotlinx.benchmark"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.jetbrains.kotlinx:kotlinx-benchmark-runtime"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "com.palantir.git-version"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.jetbrains.kotlinx.binary-compatibility-validator"
+        update-types: ["version-update:semver-major"]
+
+  # build-logic is a separate included build (its own Gradle project), directory-scoped here for
+  # Dependabot -- but it shares the root's gradle/libs.versions.toml catalog (wired in via its own
+  # settings.gradle.kts), so its dependency versions live in that one shared file, not hardcoded here.
+  - package-ecosystem: "gradle"
+    directory: "/build-logic"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # non-critical: pure tooling, minor allowed
+      - dependency-name: "com.vanniktech:gradle-maven-publish-plugin"
+        update-types: ["version-update:semver-major"]
+      # patch-only: pinned here only so the precompiled convention script can resolve the `kotlin { }`
+      # extension type at compile time (see spring-kafka-kotlin.published-module.gradle.kts) -- reuses
+      # version.ref = "kotlin" in the shared catalog, so it moves in lockstep with the rest of the
+      # project's Kotlin version automatically rather than needing manual cross-directory syncing.
+      - dependency-name: "org.jetbrains.kotlin:kotlin-gradle-plugin"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
