@@ -4,7 +4,7 @@ ktlint-gradle = "14.2.0"
 kotlinx-benchmark = "0.4.17"
 palantir-git-version = "5.0.0"
 binary-compatibility-validator = "0.18.1"
-aspectjweaver = "1.9.24"
+aspectjweaver = "1.9.25.1"
 kotlinx-coroutines = "1.11.0"
 vanniktech-maven-publish = "0.37.0"
 
