@@ -1,0 +1,74 @@
+[versions]
+kotlin = "2.2.21"
+ktlint-gradle = "14.2.0"
+kotlinx-benchmark = "0.4.17"
+palantir-git-version = "5.0.0"
+binary-compatibility-validator = "0.18.1"
+aspectjweaver = "1.9.24"
+kotlinx-coroutines = "1.11.0"
+vanniktech-maven-publish = "0.37.0"
+
+# One alias per spring-kafka version axis -- never shared across modules, each spring-kafka-kotlin-* module
+# targets exactly one of these.
+spring-kafka-v28 = "2.8.11"
+spring-kafka-v29 = "2.9.13"
+spring-kafka-v30 = "3.0.15"
+spring-kafka-v31 = "3.1.6"
+spring-kafka-v32 = "3.2.10"
+spring-kafka-v33 = "3.3.16"
+spring-kafka-v40 = "4.0.6"
+spring-kafka-v41 = "4.1.0"
+
+# spring-aop tracks the Spring Framework version bundled with each spring-kafka release above. 3.2/3.3/4.0/
+# 4.1 (plus hook-aspect-native and the benchmarks module, which target that same axis) all happen to bundle
+# the same Spring Framework release, hence one shared alias for that axis instead of 4 identical ones.
+spring-aop-v28 = "5.3.24"
+spring-aop-v29 = "5.3.29"
+spring-aop-v30 = "6.0.18"
+spring-aop-v31 = "6.1.9"
+spring-aop-v32plus = "6.2.19"
+
+# JUnit 6 requires JVM 17+; JVM 8 modules stay on the latest JUnit 5.x.
+junit-bom-jvm8 = "5.14.4"
+junit-bom-jvm17 = "6.1.2"
+
+[libraries]
+spring-kafka-v28 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v28" }
+spring-kafka-v29 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v29" }
+spring-kafka-v30 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v30" }
+spring-kafka-v31 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v31" }
+spring-kafka-v32 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v32" }
+spring-kafka-v33 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v33" }
+spring-kafka-v40 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v40" }
+spring-kafka-v41 = { module = "org.springframework.kafka:spring-kafka", version.ref = "spring-kafka-v41" }
+
+spring-aop-v28 = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v28" }
+spring-aop-v29 = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v29" }
+spring-aop-v30 = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v30" }
+spring-aop-v31 = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v31" }
+spring-aop-v32plus = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v32plus" }
+
+aspectjweaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectjweaver" }
+
+kotlinx-coroutines-jdk8 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+
+kotlinx-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlinx-benchmark" }
+
+junit-bom-jvm8 = { module = "org.junit:junit-bom", version.ref = "junit-bom-jvm8" }
+junit-bom-jvm17 = { module = "org.junit:junit-bom", version.ref = "junit-bom-jvm17" }
+
+# Consumed by build-logic's own build.gradle.kts (a separate Gradle build, see build-logic/settings.gradle.kts
+# for how it wires in this same catalog file) -- kotlin-gradle-plugin intentionally reuses the "kotlin"
+# version above so it can never drift out of sync with the rest of the project's Kotlin version.
+vanniktech-maven-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktech-maven-publish" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-plugin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-plugin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
+kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlinx-benchmark" }
+palantir-git-version = { id = "com.palantir.git-version", version.ref = "palantir-git-version" }
+binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
