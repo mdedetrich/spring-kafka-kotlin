@@ -22,11 +22,11 @@ spring-kafka-v41 = "4.1.0"
 # spring-aop tracks the Spring Framework version bundled with each spring-kafka release above. 3.2/3.3/4.0/
 # 4.1 (plus hook-aspect-native and the benchmarks module, which target that same axis) all happen to bundle
 # the same Spring Framework release, hence one shared alias for that axis instead of 4 identical ones.
-spring-aop-v28 = "5.3.24"
-spring-aop-v29 = "5.3.29"
-spring-aop-v30 = "6.0.18"
-spring-aop-v31 = "6.1.9"
-spring-aop-v32plus = "6.2.19"
+spring-aop-v28 = "5.3.39"
+spring-aop-v29 = "5.3.39"
+spring-aop-v30 = "5.3.39"
+spring-aop-v31 = "5.3.39"
+spring-aop-v32plus = "5.3.39"
 
 # JUnit 6 requires JVM 17+; JVM 8 modules stay on the latest JUnit 5.x.
 junit-bom-jvm8 = "5.14.4"
