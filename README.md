@@ -1,5 +1,8 @@
 # spring-kafka-kotlin
 
+[![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.1?label=maven%20central)](https://central.sonatype.com/namespace/org.mdedetrich)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
 Kotlin-first abstractions for using `spring-kafka` from Kotlin — coroutine-native
 APIs in place of `CompletableFuture` (`KafkaTemplate`, `ReplyingKafkaTemplate`,
 `RoutingKafkaTemplate`, `AggregatingReplyingKafkaTemplate`), a hook for running
@@ -145,16 +148,16 @@ Pick the module matching the `spring-kafka` version already pulled in by your
 Spring Boot version. Only one of these is meant to be on the classpath at a
 time; all share the same package (`org.mdedetrich.spring.kafka.kotlin`).
 
-| Module | `spring-kafka` version | Minimum JVM |
-|---|---|---|
-| `spring-kafka-kotlin-2.8` | 2.8.11 | 8 |
-| `spring-kafka-kotlin-2.9` | 2.9.13 | 8 |
-| `spring-kafka-kotlin-3.0` | 3.0.15 | 17 |
-| `spring-kafka-kotlin-3.1` | 3.1.6 | 17 |
-| `spring-kafka-kotlin-3.2` | 3.2.10 | 17 |
-| `spring-kafka-kotlin-3.3` | 3.3.16 | 17 |
-| `spring-kafka-kotlin-4.0` | 4.0.6 | 17 |
-| `spring-kafka-kotlin-4.1` | 4.1.0 | 17 |
+| Module | `spring-kafka` version | Minimum JVM | Maven Central |
+|---|---|---|---|
+| `spring-kafka-kotlin-2.8` | 2.8.11 | 8 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.8)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.8) |
+| `spring-kafka-kotlin-2.9` | 2.9.13 | 8 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.9)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.9) |
+| `spring-kafka-kotlin-3.0` | 3.0.15 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.0)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.0) |
+| `spring-kafka-kotlin-3.1` | 3.1.6 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.1)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.1) |
+| `spring-kafka-kotlin-3.2` | 3.2.10 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.2)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.2) |
+| `spring-kafka-kotlin-3.3` | 3.3.16 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.3)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.3) |
+| `spring-kafka-kotlin-4.0` | 4.0.6 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.0)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.0) |
+| `spring-kafka-kotlin-4.1` | 4.1.0 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.1)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.1) |
 
 `spring-kafka` itself is declared `compileOnly` in each module (`provided`
 scope) — the consuming application supplies it at runtime via its own
