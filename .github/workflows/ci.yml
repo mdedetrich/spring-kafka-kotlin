@@ -48,9 +48,12 @@ jobs:
       # Publishes a per-test pass/fail breakdown (as a GitHub Check Run) from every module's JUnit XML
       # output -- runs even if the previous step failed, so failing tests are still visible in detail.
       - name: Publish test results
-        uses: dorny/test-reporter@v3
+        uses: mikepenz/action-junit-report@v6
         if: always()
         with:
-          name: Test Results
-          path: "**/build/test-results/test/TEST-*.xml"
-          reporter: java-junit
+          check_name: Test Results
+          report_paths: "**/build/test-results/test/TEST-*.xml"
+          detailed_summary: true
+          include_passed: false
+          comment: true
+          check_retries: true
