@@ -7,6 +7,11 @@ permissions:
   contents: read
   checks: write
   pull-requests: write
+  # Required by dorny/test-reporter to read back the workflow run's own context when attaching its
+  # check run -- without it, the action's "Publish test results" step reports success but silently
+  # skips creating the check run (no fail-on-error set, so the internal permission error is just a
+  # warning, not a step failure).
+  actions: read
 
 jobs:
   build:
