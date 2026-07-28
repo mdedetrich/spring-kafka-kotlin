@@ -48,7 +48,7 @@ jobs:
       # Publishes a per-test pass/fail breakdown (as a GitHub Check Run) from every module's JUnit XML
       # output -- runs even if the previous step failed, so failing tests are still visible in detail.
       - name: Publish test results
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@v3
         if: always()
         with:
           name: Test Results
