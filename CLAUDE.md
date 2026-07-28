@@ -186,9 +186,11 @@ pinning that artifact.
 
 ## CI (`.github/workflows/`)
 
-- `ci.yml`: runs on every PR — `ktlintCheck` and `test` as separate steps (a lint failure should read
-  distinctly from a test failure), plus `dorny/test-reporter` for a per-test breakdown and
-  `gradle/actions/setup-gradle`'s job summary/PR comment on failure.
+- `ci.yml`: runs on every PR and on every push to `main` — `ktlintCheck` and `test` as separate steps
+  (a lint failure should read distinctly from a test failure), plus `dorny/test-reporter` for a per-test
+  breakdown and `gradle/actions/setup-gradle`'s job summary/PR comment on failure. The `push: branches:
+  ["main"]` trigger exists specifically so the README's CI badge (which points at `?branch=main`) has a
+  real run to report on — PR-only runs report against the PR's head branch, never `main` itself.
 - `release.yml`: runs on pushing a `v*` tag — same lint/test gate, then `publishToMavenCentral`. Uses
   `fetch-depth: 0` on checkout (`com.palantir.git-version` needs full history/tags to `git describe`
   correctly — the default shallow checkout breaks this). Reads 5 secrets
