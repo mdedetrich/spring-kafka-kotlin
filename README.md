@@ -1,5 +1,6 @@
 # spring-kafka-kotlin
 
+[![CI](https://github.com/mdedetrich/spring-kafka-kotlin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mdedetrich/spring-kafka-kotlin/actions/workflows/ci.yml?query=branch%3Amain)
 [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.1?label=maven%20central)](https://central.sonatype.com/namespace/org.mdedetrich)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
