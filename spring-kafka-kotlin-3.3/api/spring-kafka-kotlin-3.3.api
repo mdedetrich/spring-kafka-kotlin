@@ -336,6 +336,7 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListe
 }
 
 public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHookAspect : org/springframework/beans/factory/DisposableBean {
+	public fun <init> (Ljava/util/List;)V
 	public fun <init> (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHook;)V
 	public final fun aroundKafkaListener (Lorg/aspectj/lang/ProceedingJoinPoint;)Ljava/lang/Object;
 	public fun destroy ()V
