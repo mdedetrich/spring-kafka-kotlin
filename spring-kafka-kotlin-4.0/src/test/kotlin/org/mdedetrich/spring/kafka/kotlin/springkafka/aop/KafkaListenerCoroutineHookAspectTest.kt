@@ -179,11 +179,32 @@ open class ComponentScanConfig {
     open fun kafkaListenerCoroutineHookAspect(hook: KafkaListenerCoroutineHook) = KafkaListenerCoroutineHookAspect(hook)
 }
 
+// Only registers recordingListener() -- the KafkaListenerCoroutineHookAspect(hooks) bean itself is
+// registered directly via contextWithHooks below, bypassing Spring's own List<KafkaListenerCoroutineHook>
+// autowiring (which sorts by @Order/Ordered) since these tests are about verifying the compose() ordering
+// the constructor itself does, given an already-ordered list, not Spring's separate sorting guarantee.
+@Configuration
+@EnableAspectJAutoProxy
+open class RecordingListenerOnlyConfig {
+    @Bean
+    open fun recordingListener() = RecordingListener()
+}
+
 class KafkaListenerCoroutineHookAspectTest {
     private fun contextWithHook(hook: KafkaListenerCoroutineHook) =
         AnnotationConfigApplicationContext().apply {
             registerBean(KafkaListenerCoroutineHook::class.java, java.util.function.Supplier { hook })
             register(RecordingListenerConfig::class.java)
+            refresh()
+        }
+
+    private fun contextWithHooks(hooks: List<KafkaListenerCoroutineHook>) =
+        AnnotationConfigApplicationContext().apply {
+            registerBean(
+                KafkaListenerCoroutineHookAspect::class.java,
+                java.util.function.Supplier { KafkaListenerCoroutineHookAspect(hooks) },
+            )
+            register(RecordingListenerOnlyConfig::class.java)
             refresh()
         }
 
@@ -524,5 +545,56 @@ class KafkaListenerCoroutineHookAspectTest {
 
         assertTrue(hookSawCancellation)
         assertTrue(callerSawCancellation)
+    }
+
+    @Test
+    @Timeout(10)
+    suspend fun `hooks compose outermost-first, wrapping in list order like a filter chain`() {
+        val events = mutableListOf<String>()
+
+        fun taggedHook(tag: String) =
+            hook { _, processMessage ->
+                events += "$tag-before"
+                val result = processMessage()
+                events += "$tag-after"
+                result
+            }
+
+        contextWithHooks(listOf(taggedHook("outer"), taggedHook("inner"))).use { context ->
+            val listener = context.getBean(RecordingListener::class.java)
+            val record = recordWithCorrelationId("order-hooks-1", correlationId = null)
+
+            listener.processMessage(record)
+
+            assertEquals(listOf("outer-before", "inner-before", "inner-after", "outer-after"), events)
+        }
+    }
+
+    @Test
+    @Timeout(10)
+    suspend fun `an empty hooks list steps the Aspect aside entirely, same as NONE`() {
+        val callingThreadName = currentBaseThreadName()
+
+        contextWithHooks(emptyList()).use { context ->
+            val listener = context.getBean(RecordingListener::class.java)
+            val record = recordWithCorrelationId("order-hooks-2", "abc-123")
+
+            val result = listener.processMessage(record)
+
+            assertEquals("processed:order-hooks-2:correlationId=null:thread=$callingThreadName", result)
+        }
+    }
+
+    @Test
+    @Timeout(10)
+    suspend fun `a singleton hooks list behaves the same as the single-hook constructor`() {
+        contextWithHooks(listOf(correlationIdHook)).use { context ->
+            val listener = context.getBean(RecordingListener::class.java)
+            val record = recordWithCorrelationId("order-hooks-3", "abc-123")
+
+            val result = listener.processMessage(record)
+
+            assertTrue(result.startsWith("processed:order-hooks-3:correlationId=abc-123:thread="))
+        }
     }
 }
