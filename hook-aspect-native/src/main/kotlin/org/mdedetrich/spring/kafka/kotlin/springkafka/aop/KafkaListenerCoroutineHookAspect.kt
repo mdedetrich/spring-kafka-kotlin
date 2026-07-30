@@ -71,6 +71,22 @@ import kotlin.reflect.jvm.kotlinFunction
 public class KafkaListenerCoroutineHookAspect(
     private val hook: KafkaListenerCoroutineHook,
 ) : DisposableBean {
+    /**
+     * Composes multiple hooks into one, the same way Spring WebFlux composes multiple `CoWebFilter` beans
+     * into its `WebFilterChain`: [hooks]'s first element is outermost (its "before [processMessage]" logic
+     * runs first, its "after" logic runs last), each subsequent hook nested inside it, with the real
+     * listener body innermost.
+     *
+     * This is also how ordering multiple hooks with `@Order`/[org.springframework.core.Ordered] works:
+     * declare each hook as its own `@Order`-annotated Spring bean (exactly like `@Order(Ordered
+     * .HIGHEST_PRECEDENCE) class MyHook : KafkaListenerCoroutineHook()`), and inject them collected into
+     * a `List<KafkaListenerCoroutineHook>` -- Spring's `AnnotationAwareOrderComparator` sorts any such
+     * list/array-typed bean dependency by `@Order`/`Ordered` automatically before this constructor ever
+     * sees it, no extra code needed on [KafkaListenerCoroutineHook] itself.
+     * @param hooks the hooks to compose, outermost first.
+     */
+    public constructor(hooks: List<KafkaListenerCoroutineHook>) : this(hooks.compose())
+
     // Not used to launch invocations directly (see aroundKafkaListener) -- exists purely to hold the
     // parent Job that every per-invocation Job is created as a child of, so destroy()'s single
     // scope.cancel() cancels every invocation still in flight, without paying for a full launch() per
@@ -291,4 +307,24 @@ private fun rawClassOf(type: Type): Class<*>? =
         // bare Class or ParameterizedType.
         is WildcardType -> type.upperBounds.firstOrNull()?.let(::rawClassOf)
         else -> null
+    }
+
+// Right-fold into a single hook: the first element ends up outermost (its "before"/"after" logic wraps
+// everything after it), each subsequent hook nested one level deeper, with the real processMessage
+// (passed in at call time, not here) innermost -- the same nesting order a WebFilterChain builds from
+// multiple CoWebFilter beans. An empty list composes to NONE itself (not a no-op wrapper around nothing),
+// preserving aroundKafkaListener's `hook === KafkaListenerCoroutineHook.NONE` reference-equality fast
+// path; a singleton list likewise reduces to that one element unchanged, for the same reason.
+private fun List<KafkaListenerCoroutineHook>.compose(): KafkaListenerCoroutineHook =
+    if (isEmpty()) {
+        KafkaListenerCoroutineHook.NONE
+    } else {
+        reduceRight { outer, inner ->
+            object : KafkaListenerCoroutineHook() {
+                override suspend fun hook(
+                    invocation: KafkaListenerInvocation,
+                    processMessage: suspend () -> Any?,
+                ): Any? = outer.hook(invocation) { inner.hook(invocation, processMessage) }
+            }
+        }
     }
