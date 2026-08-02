@@ -77,6 +77,15 @@ sibling project `spring-virtual-reactor` (`CoroutineTransactionTemplate`/
   bounded/unbounded split or any other grouping used elsewhere in this repo, so extracting them would add
   a shared module whose membership doesn't match the naming pattern of the others, for a one-line resource
   file and a ~20-line test.
+- **`AutoConfigurationMetadataTest`** also stays per-module, for the same reason: it asserts on the real
+  contents of `META-INF/spring-autoconfigure-metadata.properties` (`ConditionalOnSingleCandidate`/
+  `AutoConfigureAfter` entries for all four auto-configurations), which only exists because kapt +
+  `spring-boot-autoconfigure-processor` ran on *this module's own* compile — neither
+  `boot-autoconfiguration-unbounded`/`-bounded` nor `boot-dispatcher-test-*` apply kapt themselves, so
+  there's nothing this test could assert on if it were shared into them instead. `KafkaCoroutineTemplateAutoConfiguration`'s
+  own `AutoConfigureAfter` value differs by group: `org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration`
+  for the unbounded group (2.8–3.3), `org.springframework.boot.kafka.autoconfigure.KafkaAutoConfiguration`
+  for the bounded group (4.0/4.1) — matching the Boot 4 `KafkaAutoConfiguration` relocation noted above.
 - `ReplyingKafkaCoroutineTemplateAutoConfiguration` mirrors `KafkaCoroutineTemplateAutoConfiguration` in
   every respect (same unbounded/bounded generic split — `<K, V, R>` vs `<K : Any, V : Any, R : Any>` — same
   `blockingIODispatcher` qualifier reuse, same `@ConditionalOnMissingBean` "customize-or-default" reasoning)
@@ -443,7 +452,7 @@ find . -path "*/build/test-results/test/TEST-*.xml" -exec grep -H 'testsuite nam
   awk -F'"' '{s+=$2; f+=$4; e+=$6} END {print "total tests:", s, "failures:", f, "errors:", e}'
 ```
 
-At the time of writing this is 809 tests, 0 failures, 0 errors — that number will grow as more tests are
+At the time of writing this is 841 tests, 0 failures, 0 errors — that number will grow as more tests are
 added; the point is to confirm it doesn't *shrink* or gain failures after a change. A pure refactor
 (extracting shared source, renaming modules, changing build wiring) should never change the test count.
 
