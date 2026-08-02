@@ -9,7 +9,7 @@ kotlinx-coroutines = "1.11.0"
 # assertj-core: only needed because AssertableApplicationContext (ApplicationContextRunner's own callback
 # type) extends assertj's AssertProvider -- required to resolve at compile time even though the
 # AutoConfigurationOrderingTest files don't call any assertj assertion method themselves.
-assertj = "3.24.2"
+assertj = "3.27.7"
 vanniktech-maven-publish = "0.37.0"
 
 # One alias per spring-kafka version axis -- never shared across modules, each spring-kafka-kotlin-* module
