@@ -1,8 +1,5 @@
 pluginManagement {
     includeBuild("build-logic")
-    plugins {
-        kotlin("plugin.spring") version "2.2.21"
-    }
 }
 
 rootProject.name = "spring-kafka-kotlin"
