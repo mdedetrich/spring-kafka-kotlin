@@ -11,10 +11,11 @@ plugins {
     alias(libs.plugins.binary.compatibility.validator)
 }
 
-// Only the 8 spring-kafka-kotlin-* modules are real published artifacts with a public API worth locking
-// down. The shared-source modules (hook-aspect-*, micrometer-tags-provider-cache,
-// send-and-receive-result-*) aren't published as their own artifacts, and the benchmark harnesses aren't
-// published at all -- none of them have their own meaningful API surface to validate.
+// Only the 16 spring-kafka-kotlin-*/*-boot modules are real published artifacts with a public API worth
+// locking down. The shared-source modules (hook-aspect-*, micrometer-tags-provider-cache,
+// send-and-receive-result-*, boot-autoconfiguration-*, boot-dispatcher-test-*) aren't published as their
+// own artifacts, and the benchmark harnesses aren't published at all -- none of them have their own
+// meaningful API surface to validate.
 apiValidation {
     ignoredProjects.addAll(
         listOf(
@@ -23,6 +24,11 @@ apiValidation {
             "micrometer-tags-provider-cache",
             "send-and-receive-result-unbounded",
             "send-and-receive-result-bounded",
+            "boot-autoconfiguration-unbounded",
+            "boot-autoconfiguration-bounded",
+            "boot-dispatcher-test-legacy",
+            "boot-dispatcher-test-unbounded",
+            "boot-dispatcher-test-bounded",
             "benchmarks",
             "benchmarks-compat",
         ),

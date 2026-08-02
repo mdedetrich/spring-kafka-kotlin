@@ -6,6 +6,10 @@ palantir-git-version = "5.0.0"
 binary-compatibility-validator = "0.18.1"
 aspectjweaver = "1.9.25.1"
 kotlinx-coroutines = "1.11.0"
+# assertj-core: only needed because AssertableApplicationContext (ApplicationContextRunner's own callback
+# type) extends assertj's AssertProvider -- required to resolve at compile time even though the
+# AutoConfigurationOrderingTest files don't call any assertj assertion method themselves.
+assertj = "3.24.2"
 vanniktech-maven-publish = "0.37.0"
 
 # One alias per spring-kafka version axis -- never shared across modules, each spring-kafka-kotlin-* module
@@ -28,6 +32,18 @@ spring-aop-v30 = "6.0.18"
 spring-aop-v31 = "6.1.9"
 spring-aop-v32plus = "6.2.19"
 
+# One alias per spring-boot version axis, tracking the spring-kafka-vXY axis above -- each
+# spring-kafka-kotlin-X.Y-boot module targets exactly one of these, matching the spring-kafka-kotlin-X.Y
+# module it wraps. Only the latest patch of the matching Boot minor line at time of writing.
+spring-boot-v28 = "2.6.15"
+spring-boot-v29 = "2.7.18"
+spring-boot-v30 = "3.0.13"
+spring-boot-v31 = "3.1.12"
+spring-boot-v32 = "3.2.12"
+spring-boot-v33 = "3.3.13"
+spring-boot-v40 = "4.0.7"
+spring-boot-v41 = "4.1.0"
+
 # JUnit 6 requires JVM 17+; JVM 8 modules stay on the latest JUnit 5.x.
 junit-bom-jvm8 = "5.14.4"
 junit-bom-jvm17 = "6.1.2"
@@ -47,6 +63,70 @@ spring-aop-v29 = { module = "org.springframework:spring-aop", version.ref = "spr
 spring-aop-v30 = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v30" }
 spring-aop-v31 = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v31" }
 spring-aop-v32plus = { module = "org.springframework:spring-aop", version.ref = "spring-aop-v32plus" }
+
+# spring-boot: only needed by the -boot modules' own tests, for org.springframework.boot.context.
+# annotation.ImportCandidates -- the mechanism that verifies an auto-configuration is actually registered
+# via META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports, not just a
+# @Configuration class that happens to exist. Not a dependency of any -boot module's own main source.
+spring-boot-v28 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v28" }
+spring-boot-v29 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v29" }
+spring-boot-v30 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v30" }
+spring-boot-v31 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v31" }
+spring-boot-v32 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v32" }
+spring-boot-v33 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v33" }
+spring-boot-v40 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v40" }
+spring-boot-v41 = { module = "org.springframework.boot:spring-boot", version.ref = "spring-boot-v41" }
+
+# spring-boot-autoconfigure: @ConditionalOnBean/@ConditionalOnMissingBean, the actual dependency each
+# -boot module's own AutoConfiguration class needs (transitively brings spring-context's @Configuration/
+# @Bean too, so no separate spring-context alias is needed here).
+spring-boot-autoconfigure-v28 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v28" }
+spring-boot-autoconfigure-v29 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v29" }
+spring-boot-autoconfigure-v30 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v30" }
+spring-boot-autoconfigure-v31 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v31" }
+spring-boot-autoconfigure-v32 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v32" }
+spring-boot-autoconfigure-v33 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v33" }
+spring-boot-autoconfigure-v40 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v40" }
+spring-boot-autoconfigure-v41 = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-v41" }
+
+# spring-boot-kafka: Spring Boot 4.0 split KafkaAutoConfiguration out of spring-boot-autoconfigure entirely
+# into this dedicated module (org.springframework.boot.kafka.autoconfigure.KafkaAutoConfiguration, moved
+# from org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration in 2.8-3.3) -- part of Boot 4's
+# broader modularization of spring-boot-autoconfigure into per-technology jars. Doesn't exist pre-4.0.
+spring-boot-kafka-v40 = { module = "org.springframework.boot:spring-boot-kafka", version.ref = "spring-boot-v40" }
+spring-boot-kafka-v41 = { module = "org.springframework.boot:spring-boot-kafka", version.ref = "spring-boot-v41" }
+
+# spring-boot-test: ApplicationContextRunner + AutoConfigurations.of(...), Spring Boot's own recommended way
+# to test an auto-configuration class -- exercises the real AutoConfigurationImportSelector/
+# AutoConfigurationSorter pipeline (ordering, alphabetical fallback, @AutoConfigureAfter/Before), unlike
+# this repo's own context.register(...)-based tests, which bypass that pipeline entirely. See
+# AutoConfigurationOrderingTest in each boot-dispatcher-test-* module.
+spring-boot-test-v28 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v28" }
+spring-boot-test-v29 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v29" }
+spring-boot-test-v30 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v30" }
+spring-boot-test-v31 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v31" }
+spring-boot-test-v32 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v32" }
+spring-boot-test-v33 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v33" }
+spring-boot-test-v40 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v40" }
+spring-boot-test-v41 = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot-v41" }
+
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+
+# spring-boot-autoconfigure-processor: generates META-INF/spring-autoconfigure-metadata.properties at
+# compile time -- a pre-parsed summary of each auto-configuration's conditions, letting
+# AutoConfigurationSorter/AutoConfigurationImportFilter skip full ASM classloading of every candidate
+# purely to check conditions during sorting/filtering. Pure Boot-startup-performance optimization (real
+# Boot auto-configurations all generate this); functionally optional -- everything already works correctly
+# without it, verified by the AutoConfigurationOrderingTest suite. Applied via kapt (a Java-only annotation
+# processor, no Kotlin/KSP variant exists for it).
+spring-boot-autoconfigure-processor-v28 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v28" }
+spring-boot-autoconfigure-processor-v29 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v29" }
+spring-boot-autoconfigure-processor-v30 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v30" }
+spring-boot-autoconfigure-processor-v31 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v31" }
+spring-boot-autoconfigure-processor-v32 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v32" }
+spring-boot-autoconfigure-processor-v33 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v33" }
+spring-boot-autoconfigure-processor-v40 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v40" }
+spring-boot-autoconfigure-processor-v41 = { module = "org.springframework.boot:spring-boot-autoconfigure-processor", version.ref = "spring-boot-v41" }
 
 aspectjweaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectjweaver" }
 
