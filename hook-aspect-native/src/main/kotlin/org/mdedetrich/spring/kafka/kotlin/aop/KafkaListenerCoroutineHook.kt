@@ -20,16 +20,16 @@ import org.springframework.messaging.handler.HandlerMethod
  * (manual ack mode) and `Consumer<?, ?>` (raw consumer access) parameters are valid alongside *any* of
  * the record shapes below, not just one of them.
  *
- * @param handlerMethod the suspend `@KafkaListener` method about to be invoked, bundled with its real
+ * @property handlerMethod the suspend `@KafkaListener` method about to be invoked, bundled with its real
  * target bean (not the AOP proxy) -- the same abstraction Spring's own messaging/web method-invocation
  * infrastructure (e.g. [org.springframework.messaging.handler.invocation.InvocableHandlerMethod], which
  * `spring-kafka`'s own [org.springframework.kafka.listener.adapter.KotlinAwareInvocableHandlerMethod]
  * extends) uses to represent "a method plus the instance to invoke it
  * on," rather than the two as separate, uncorrelated parameters.
- * @param acknowledgment the listener's [Acknowledgment] argument, if declared (manual ack mode). `null`
+ * @property acknowledgment the listener's [Acknowledgment] argument, if declared (manual ack mode). `null`
  * otherwise.
- * @param consumer the listener's raw [Consumer] argument, if declared. `null` otherwise.
- * @param methodArgumentValues all resolved arguments the listener method is about to be invoked with, in
+ * @property consumer the listener's raw [Consumer] argument, if declared. `null` otherwise.
+ * @property methodArgumentValues all resolved arguments the listener method is about to be invoked with, in
  * declaration order (the compiler-generated [kotlin.coroutines.Continuation] parameter is not included) -- named after
  * Spring's own `InvocableHandlerMethod.getMethodArgumentValues()`, which is what actually produces them.
  * Placed last, and least likely to be needed: [SingleRecord]/[BatchRecords]/[IndividualParameters]'s own
@@ -44,25 +44,25 @@ public sealed class KafkaListenerInvocation {
     /**
      * A single-record listener: `fun listener(record: ConsumerRecord<K, V>)`, optionally alongside other
      * parameters (e.g. [Acknowledgment], [Consumer]).
-     * @param record the listener's [ConsumerRecord] argument.
+     * @property record the listener's [ConsumerRecord] argument.
      */
-    public data class SingleRecord(
+    public class SingleRecord internal constructor(
         override val handlerMethod: HandlerMethod,
         override val acknowledgment: Acknowledgment?,
         override val consumer: Consumer<*, *>?,
-        val record: ConsumerRecord<*, *>,
+        public val record: ConsumerRecord<*, *>,
         override val methodArgumentValues: List<Any?>,
     ) : KafkaListenerInvocation()
 
     /**
      * A batch listener: `fun listener(records: List<ConsumerRecord<K, V>>)`.
-     * @param records the listener's batch of records.
+     * @property records the listener's batch of records.
      */
-    public data class BatchRecords(
+    public class BatchRecords internal constructor(
         override val handlerMethod: HandlerMethod,
         override val acknowledgment: Acknowledgment?,
         override val consumer: Consumer<*, *>?,
-        val records: List<ConsumerRecord<*, *>>,
+        public val records: List<ConsumerRecord<*, *>>,
         override val methodArgumentValues: List<Any?>,
     ) : KafkaListenerInvocation()
 
@@ -73,18 +73,18 @@ public sealed class KafkaListenerInvocation {
      * `@Payload` as, is chosen per listener method, not something this library can know in advance --
      * [payload]/[headers] are as far as that can be made properly named/typed; [methodArgumentValues]
      * remains the positional fallback.
-     * @param payload the `@Payload`-annotated parameter's resolved value, if the method declares one.
+     * @property payload the `@Payload`-annotated parameter's resolved value, if the method declares one.
      * `null` if it doesn't (including the case where a parameter is treated as the payload implicitly,
      * without an explicit `@Payload` annotation -- this only recognizes an explicit one).
-     * @param headers `@Header`-annotated parameters, keyed by the header name each one declares (e.g.
+     * @property headers `@Header`-annotated parameters, keyed by the header name each one declares (e.g.
      * [org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY]) rather than by declaration position.
      */
-    public data class IndividualParameters(
+    public class IndividualParameters internal constructor(
         override val handlerMethod: HandlerMethod,
         override val acknowledgment: Acknowledgment?,
         override val consumer: Consumer<*, *>?,
-        val payload: Any?,
-        val headers: Map<String, Any?>,
+        public val payload: Any?,
+        public val headers: Map<String, Any?>,
         override val methodArgumentValues: List<Any?>,
     ) : KafkaListenerInvocation()
 }

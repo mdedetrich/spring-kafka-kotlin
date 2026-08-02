@@ -349,61 +349,27 @@ public abstract class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvoca
 }
 
 public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords : org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation {
-	public fun <init> (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;)V
-	public final fun component1 ()Lorg/springframework/messaging/handler/HandlerMethod;
-	public final fun component2 ()Lorg/springframework/kafka/support/Acknowledgment;
-	public final fun component3 ()Lorg/apache/kafka/clients/consumer/Consumer;
-	public final fun component4 ()Ljava/util/List;
-	public final fun component5 ()Ljava/util/List;
-	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords;
-	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords;
-	public fun equals (Ljava/lang/Object;)Z
 	public fun getAcknowledgment ()Lorg/springframework/kafka/support/Acknowledgment;
 	public fun getConsumer ()Lorg/apache/kafka/clients/consumer/Consumer;
 	public fun getHandlerMethod ()Lorg/springframework/messaging/handler/HandlerMethod;
 	public fun getMethodArgumentValues ()Ljava/util/List;
 	public final fun getRecords ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters : org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation {
-	public fun <init> (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;)V
-	public final fun component1 ()Lorg/springframework/messaging/handler/HandlerMethod;
-	public final fun component2 ()Lorg/springframework/kafka/support/Acknowledgment;
-	public final fun component3 ()Lorg/apache/kafka/clients/consumer/Consumer;
-	public final fun component4 ()Ljava/lang/Object;
-	public final fun component5 ()Ljava/util/Map;
-	public final fun component6 ()Ljava/util/List;
-	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters;
-	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters;
-	public fun equals (Ljava/lang/Object;)Z
 	public fun getAcknowledgment ()Lorg/springframework/kafka/support/Acknowledgment;
 	public fun getConsumer ()Lorg/apache/kafka/clients/consumer/Consumer;
 	public fun getHandlerMethod ()Lorg/springframework/messaging/handler/HandlerMethod;
 	public final fun getHeaders ()Ljava/util/Map;
 	public fun getMethodArgumentValues ()Ljava/util/List;
 	public final fun getPayload ()Ljava/lang/Object;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord : org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation {
-	public fun <init> (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;)V
-	public final fun component1 ()Lorg/springframework/messaging/handler/HandlerMethod;
-	public final fun component2 ()Lorg/springframework/kafka/support/Acknowledgment;
-	public final fun component3 ()Lorg/apache/kafka/clients/consumer/Consumer;
-	public final fun component4 ()Lorg/apache/kafka/clients/consumer/ConsumerRecord;
-	public final fun component5 ()Ljava/util/List;
-	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord;
-	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord;
-	public fun equals (Ljava/lang/Object;)Z
 	public fun getAcknowledgment ()Lorg/springframework/kafka/support/Acknowledgment;
 	public fun getConsumer ()Lorg/apache/kafka/clients/consumer/Consumer;
 	public fun getHandlerMethod ()Lorg/springframework/messaging/handler/HandlerMethod;
 	public fun getMethodArgumentValues ()Ljava/util/List;
 	public final fun getRecord ()Lorg/apache/kafka/clients/consumer/ConsumerRecord;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
