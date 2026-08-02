@@ -2,9 +2,9 @@ package org.mdedetrich.spring.kafka.kotlin.benchmarks
 
 import kotlinx.coroutines.runBlocking
 import org.apache.kafka.clients.consumer.ConsumerRecord
-import org.mdedetrich.spring.kafka.kotlin.springkafka.aop.KafkaListenerCoroutineHook
-import org.mdedetrich.spring.kafka.kotlin.springkafka.aop.KafkaListenerCoroutineHookAspect
-import org.mdedetrich.spring.kafka.kotlin.springkafka.aop.KafkaListenerInvocation
+import org.mdedetrich.spring.kafka.kotlin.aop.KafkaListenerCoroutineHook
+import org.mdedetrich.spring.kafka.kotlin.aop.KafkaListenerCoroutineHookAspect
+import org.mdedetrich.spring.kafka.kotlin.aop.KafkaListenerInvocation
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.BenchmarkMode
 import org.openjdk.jmh.annotations.Mode

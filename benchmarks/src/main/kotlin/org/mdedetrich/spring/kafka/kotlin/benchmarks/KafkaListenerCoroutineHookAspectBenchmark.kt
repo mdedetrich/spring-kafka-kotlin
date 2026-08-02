@@ -2,9 +2,9 @@ package org.mdedetrich.spring.kafka.kotlin.benchmarks
 
 import kotlinx.coroutines.runBlocking
 import org.apache.kafka.clients.consumer.ConsumerRecord
-import org.mdedetrich.spring.kafka.kotlin.springkafka.aop.KafkaListenerCoroutineHook
-import org.mdedetrich.spring.kafka.kotlin.springkafka.aop.KafkaListenerCoroutineHookAspect
-import org.mdedetrich.spring.kafka.kotlin.springkafka.aop.KafkaListenerInvocation
+import org.mdedetrich.spring.kafka.kotlin.aop.KafkaListenerCoroutineHook
+import org.mdedetrich.spring.kafka.kotlin.aop.KafkaListenerCoroutineHookAspect
+import org.mdedetrich.spring.kafka.kotlin.aop.KafkaListenerInvocation
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.BenchmarkMode
 import org.openjdk.jmh.annotations.Mode
@@ -98,7 +98,7 @@ open class NoneHookConfig {
  * through the Aspect with `hook = NONE` (proxy present, but the Aspect's own machinery never runs). The
  * gap between the two baselines is CGLIB/Spring AOP's own dispatch cost; the gap from NONE up to the
  * full hook is this Aspect's own reflection/relaunch/classification cost. Repeated for all three
- * [org.mdedetrich.spring.kafka.kotlin.springkafka.aop.KafkaListenerInvocation] shapes ([KafkaListenerInvocation.SingleRecord],
+ * [org.mdedetrich.spring.kafka.kotlin.aop.KafkaListenerInvocation] shapes ([KafkaListenerInvocation.SingleRecord],
  * [KafkaListenerInvocation.BatchRecords], [KafkaListenerInvocation.IndividualParameters]), since classification/construction differs per shape.
  */
 @State(Scope.Benchmark)
