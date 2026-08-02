@@ -1,4 +1,4 @@
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/AggregatingReplyingKafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations, org/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaCoroutineOperations {
+public final class org/mdedetrich/spring/kafka/kotlin/AggregatingReplyingKafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations, org/mdedetrich/spring/kafka/kotlin/ReplyingKafkaCoroutineOperations {
 	public fun <init> (Lorg/springframework/kafka/requestreply/AggregatingReplyingKafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public synthetic fun <init> (Lorg/springframework/kafka/requestreply/AggregatingReplyingKafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun execute (Lorg/springframework/kafka/core/KafkaOperations$ProducerCallback;)Ljava/lang/Object;
@@ -33,12 +33,12 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/AggregatingRep
 	public fun sendAndReceive-8Mi8wO0 (Lorg/apache/kafka/clients/producer/ProducerRecord;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendAndReceive-8Mi8wO0 (Lorg/springframework/messaging/Message;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendAndReceive-dWUq8MI (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun sendAndReceiveDeferred (Lorg/apache/kafka/clients/producer/ProducerRecord;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;Lorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred-8Mi8wO0 (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/apache/kafka/clients/producer/ProducerRecord;J)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/springframework/messaging/Message;J)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred (Lorg/apache/kafka/clients/producer/ProducerRecord;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;Lorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred-8Mi8wO0 (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/apache/kafka/clients/producer/ProducerRecord;J)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/springframework/messaging/Message;J)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
 	public fun sendDefault (IJLjava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendDefault (ILjava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendDefault (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -73,7 +73,7 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/AggregatingRep
 	public fun waitForAssignment-VtjQ1oo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations {
+public abstract interface class org/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations {
 	public abstract fun execute (Lorg/springframework/kafka/core/KafkaOperations$ProducerCallback;)Ljava/lang/Object;
 	public abstract fun executeInTransaction (Lorg/springframework/kafka/core/KafkaOperations$OperationsCallback;)Ljava/lang/Object;
 	public abstract fun flush ()V
@@ -100,16 +100,16 @@ public abstract interface class org/mdedetrich/spring/kafka/kotlin/springkafka/K
 	public fun sendOffsetsToTransaction (Ljava/util/Map;Lorg/apache/kafka/clients/consumer/ConsumerGroupMetadata;)V
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations$DefaultImpls {
-	public static fun getInTransaction (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations;)Z
-	public static fun getProducerFactory (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations;)Lorg/springframework/kafka/core/ProducerFactory;
-	public static fun isAllowNonTransactional (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations;)Z
-	public static fun receive (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations;Ljava/lang/String;IJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun receive (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations;Ljava/util/Collection;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun sendOffsetsToTransaction (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations;Ljava/util/Map;Lorg/apache/kafka/clients/consumer/ConsumerGroupMetadata;)V
+public final class org/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations$DefaultImpls {
+	public static fun getInTransaction (Lorg/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations;)Z
+	public static fun getProducerFactory (Lorg/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations;)Lorg/springframework/kafka/core/ProducerFactory;
+	public static fun isAllowNonTransactional (Lorg/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations;)Z
+	public static fun receive (Lorg/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations;Ljava/lang/String;IJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun receive (Lorg/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations;Ljava/util/Collection;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun sendOffsetsToTransaction (Lorg/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations;Ljava/util/Map;Lorg/apache/kafka/clients/consumer/ConsumerGroupMetadata;)V
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations {
+public final class org/mdedetrich/spring/kafka/kotlin/KafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations {
 	public fun <init> (Lorg/springframework/kafka/core/KafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public synthetic fun <init> (Lorg/springframework/kafka/core/KafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun execute (Lorg/springframework/kafka/core/KafkaOperations$ProducerCallback;)Ljava/lang/Object;
@@ -159,7 +159,7 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutine
 	public final fun setTransactionIdPrefix (Ljava/lang/String;)V
 }
 
-public abstract interface class org/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaCoroutineOperations {
+public abstract interface class org/mdedetrich/spring/kafka/kotlin/ReplyingKafkaCoroutineOperations {
 	public abstract fun getAssignedReplyTopicPartitions ()Ljava/util/Collection;
 	public abstract fun sendAndReceive (Lorg/apache/kafka/clients/producer/ProducerRecord;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun sendAndReceive (Lorg/springframework/messaging/Message;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -167,12 +167,12 @@ public abstract interface class org/mdedetrich/spring/kafka/kotlin/springkafka/R
 	public abstract fun sendAndReceive-8Mi8wO0 (Lorg/apache/kafka/clients/producer/ProducerRecord;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun sendAndReceive-8Mi8wO0 (Lorg/springframework/messaging/Message;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun sendAndReceive-dWUq8MI (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun sendAndReceiveDeferred (Lorg/apache/kafka/clients/producer/ProducerRecord;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public abstract fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public abstract fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;Lorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public abstract fun sendAndReceiveDeferred-8Mi8wO0 (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public abstract fun sendAndReceiveDeferred-HG0u8IE (Lorg/apache/kafka/clients/producer/ProducerRecord;J)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public abstract fun sendAndReceiveDeferred-HG0u8IE (Lorg/springframework/messaging/Message;J)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
+	public abstract fun sendAndReceiveDeferred (Lorg/apache/kafka/clients/producer/ProducerRecord;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public abstract fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public abstract fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;Lorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public abstract fun sendAndReceiveDeferred-8Mi8wO0 (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public abstract fun sendAndReceiveDeferred-HG0u8IE (Lorg/apache/kafka/clients/producer/ProducerRecord;J)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public abstract fun sendAndReceiveDeferred-HG0u8IE (Lorg/springframework/messaging/Message;J)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
 	public abstract fun setBinaryCorrelation (Z)V
 	public abstract fun setCorrelationHeaderName (Ljava/lang/String;)V
 	public abstract fun setCorrelationIdStrategy (Lkotlin/jvm/functions/Function1;)V
@@ -185,7 +185,7 @@ public abstract interface class org/mdedetrich/spring/kafka/kotlin/springkafka/R
 	public abstract fun waitForAssignment-VtjQ1oo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations, org/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaCoroutineOperations {
+public final class org/mdedetrich/spring/kafka/kotlin/ReplyingKafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations, org/mdedetrich/spring/kafka/kotlin/ReplyingKafkaCoroutineOperations {
 	public fun <init> (Lorg/springframework/kafka/requestreply/ReplyingKafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public synthetic fun <init> (Lorg/springframework/kafka/requestreply/ReplyingKafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun execute (Lorg/springframework/kafka/core/KafkaOperations$ProducerCallback;)Ljava/lang/Object;
@@ -220,12 +220,12 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaC
 	public fun sendAndReceive-8Mi8wO0 (Lorg/apache/kafka/clients/producer/ProducerRecord;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendAndReceive-8Mi8wO0 (Lorg/springframework/messaging/Message;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendAndReceive-dWUq8MI (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun sendAndReceiveDeferred (Lorg/apache/kafka/clients/producer/ProducerRecord;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;Lorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred-8Mi8wO0 (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/apache/kafka/clients/producer/ProducerRecord;J)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/springframework/messaging/Message;J)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred (Lorg/apache/kafka/clients/producer/ProducerRecord;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred (Lorg/springframework/messaging/Message;Lorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred-8Mi8wO0 (Lorg/springframework/messaging/Message;JLorg/springframework/core/ParameterizedTypeReference;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/apache/kafka/clients/producer/ProducerRecord;J)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public fun sendAndReceiveDeferred-HG0u8IE (Lorg/springframework/messaging/Message;J)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
 	public fun sendDefault (IJLjava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendDefault (ILjava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun sendDefault (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -258,7 +258,7 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaC
 	public fun waitForAssignment-VtjQ1oo (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/RoutingKafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineOperations {
+public final class org/mdedetrich/spring/kafka/kotlin/RoutingKafkaCoroutineTemplate : org/mdedetrich/spring/kafka/kotlin/KafkaCoroutineOperations {
 	public fun <init> (Lorg/springframework/kafka/core/RoutingKafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public synthetic fun <init> (Lorg/springframework/kafka/core/RoutingKafkaTemplate;Lkotlinx/coroutines/CoroutineDispatcher;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun execute (Lorg/springframework/kafka/core/KafkaOperations$ProducerCallback;)Ljava/lang/Object;
@@ -308,12 +308,12 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/RoutingKafkaCo
 	public final fun setTransactionIdPrefix (Ljava/lang/String;)V
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult {
+public final class org/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult {
 	public fun <init> (Lkotlinx/coroutines/Deferred;Lkotlinx/coroutines/Deferred;)V
 	public final fun component1 ()Lkotlinx/coroutines/Deferred;
 	public final fun component2 ()Lkotlinx/coroutines/Deferred;
-	public final fun copy (Lkotlinx/coroutines/Deferred;Lkotlinx/coroutines/Deferred;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
-	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;Lkotlinx/coroutines/Deferred;Lkotlinx/coroutines/Deferred;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceiveResult;
+	public final fun copy (Lkotlinx/coroutines/Deferred;Lkotlinx/coroutines/Deferred;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
+	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;Lkotlinx/coroutines/Deferred;Lkotlinx/coroutines/Deferred;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/SendAndReceiveResult;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getReply ()Lkotlinx/coroutines/Deferred;
 	public final fun getSendResult ()Lkotlinx/coroutines/Deferred;
@@ -321,39 +321,39 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/SendAndReceive
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHook {
-	public static final field Companion Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHook$Companion;
+public abstract class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerCoroutineHook {
+	public static final field Companion Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerCoroutineHook$Companion;
 	public fun <init> ()V
-	public abstract fun hook (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun hook (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHook$Companion {
-	public final fun getNONE ()Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHook;
+public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerCoroutineHook$Companion {
+	public final fun getNONE ()Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerCoroutineHook;
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHookAspect : org/springframework/beans/factory/DisposableBean {
+public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerCoroutineHookAspect : org/springframework/beans/factory/DisposableBean {
 	public fun <init> (Ljava/util/List;)V
-	public fun <init> (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerCoroutineHook;)V
+	public fun <init> (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerCoroutineHook;)V
 	public final fun aroundKafkaListener (Lorg/aspectj/lang/ProceedingJoinPoint;)Ljava/lang/Object;
 	public fun destroy ()V
 }
 
-public abstract class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation {
+public abstract class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation {
 	public abstract fun getAcknowledgment ()Lorg/springframework/kafka/support/Acknowledgment;
 	public abstract fun getConsumer ()Lorg/apache/kafka/clients/consumer/Consumer;
 	public abstract fun getHandlerMethod ()Lorg/springframework/messaging/handler/HandlerMethod;
 	public abstract fun getMethodArgumentValues ()Ljava/util/List;
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$BatchRecords : org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation {
+public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords : org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation {
 	public fun <init> (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Lorg/springframework/messaging/handler/HandlerMethod;
 	public final fun component2 ()Lorg/springframework/kafka/support/Acknowledgment;
 	public final fun component3 ()Lorg/apache/kafka/clients/consumer/Consumer;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/util/List;
-	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$BatchRecords;
-	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$BatchRecords;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$BatchRecords;
+	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords;
+	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$BatchRecords;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getAcknowledgment ()Lorg/springframework/kafka/support/Acknowledgment;
 	public fun getConsumer ()Lorg/apache/kafka/clients/consumer/Consumer;
@@ -364,7 +364,7 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListe
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$IndividualParameters : org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation {
+public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters : org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation {
 	public fun <init> (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;)V
 	public final fun component1 ()Lorg/springframework/messaging/handler/HandlerMethod;
 	public final fun component2 ()Lorg/springframework/kafka/support/Acknowledgment;
@@ -372,8 +372,8 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListe
 	public final fun component4 ()Ljava/lang/Object;
 	public final fun component5 ()Ljava/util/Map;
 	public final fun component6 ()Ljava/util/List;
-	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$IndividualParameters;
-	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$IndividualParameters;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$IndividualParameters;
+	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters;
+	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Ljava/lang/Object;Ljava/util/Map;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$IndividualParameters;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getAcknowledgment ()Lorg/springframework/kafka/support/Acknowledgment;
 	public fun getConsumer ()Lorg/apache/kafka/clients/consumer/Consumer;
@@ -385,15 +385,15 @@ public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListe
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$SingleRecord : org/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation {
+public final class org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord : org/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation {
 	public fun <init> (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;)V
 	public final fun component1 ()Lorg/springframework/messaging/handler/HandlerMethod;
 	public final fun component2 ()Lorg/springframework/kafka/support/Acknowledgment;
 	public final fun component3 ()Lorg/apache/kafka/clients/consumer/Consumer;
 	public final fun component4 ()Lorg/apache/kafka/clients/consumer/ConsumerRecord;
 	public final fun component5 ()Ljava/util/List;
-	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$SingleRecord;
-	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$SingleRecord;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/aop/KafkaListenerInvocation$SingleRecord;
+	public final fun copy (Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord;
+	public static synthetic fun copy$default (Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord;Lorg/springframework/messaging/handler/HandlerMethod;Lorg/springframework/kafka/support/Acknowledgment;Lorg/apache/kafka/clients/consumer/Consumer;Lorg/apache/kafka/clients/consumer/ConsumerRecord;Ljava/util/List;ILjava/lang/Object;)Lorg/mdedetrich/spring/kafka/kotlin/aop/KafkaListenerInvocation$SingleRecord;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getAcknowledgment ()Lorg/springframework/kafka/support/Acknowledgment;
 	public fun getConsumer ()Lorg/apache/kafka/clients/consumer/Consumer;

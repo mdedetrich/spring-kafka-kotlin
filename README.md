@@ -70,7 +70,7 @@ val reply: Message<Order> = replyingTemplate.sendAndReceiveTyped(message)
 
 Spring WebFlux's `CoWebFilter` lets you wrap a suspend handler call by calling `chain.filter(exchange)`
 however you like — install something into the coroutine context first, run code after it completes, skip
-it entirely, whatever. `KafkaListenerCoroutineHookAspect` (package `...springkafka.aop`) is the same
+it entirely, whatever. `KafkaListenerCoroutineHookAspect` (package `...kotlin.aop`) is the same
 idea for suspend `@KafkaListener` methods: `KafkaListenerCoroutineHook` is an abstract class with one
 abstract suspend method, meant to be subclassed and registered with `@Component`, that receives the
 listener's resolved invocation details and a `processMessage` suspend function representing the real
