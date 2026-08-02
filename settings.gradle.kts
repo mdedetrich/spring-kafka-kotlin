@@ -1,7 +1,7 @@
 pluginManagement {
     includeBuild("build-logic")
     plugins {
-        kotlin("plugin.spring") version "2.2.21"
+        kotlin("plugin.spring") version "2.4.10"
     }
 }
 
