@@ -33,6 +33,7 @@ private class RoutingMockProducerFactory(
     override fun createProducer(): MockProducer<Any, Any> = producer
 }
 
+@Suppress("UNCHECKED_CAST")
 private fun routingStringSerializerAsAny(): Serializer<Any> = StringSerializer() as Serializer<Any>
 
 private fun routingMockProducer(): MockProducer<Any, Any> =
