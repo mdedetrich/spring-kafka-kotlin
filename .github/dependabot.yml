@@ -15,8 +15,11 @@ version: 2
 #   above -- all three are the same Kotlin release under different plugin ids, so they must move in
 #   lockstep with it rather than potentially drifting to a different minor/major Kotlin version.
 # - non-critical: a test-only or pure-tooling dependency (junit-bom, ktlint, kotlinx-benchmark/
-#   kotlinx-benchmark-runtime, palantir-git-version, vanniktech-maven-publish) -- minor updates are
-#   allowed too, only major is ignored.
+#   kotlinx-benchmark-runtime, palantir-git-version, vanniktech-maven-publish, assertj-core) -- minor
+#   updates are allowed too, only major is ignored.
+# - patch-only, spring-boot-*: every spring-boot-* dependency added for the -boot modules' auto-configuration
+#   support (spring-boot, spring-boot-autoconfigure, spring-boot-kafka, spring-boot-test,
+#   spring-boot-autoconfigure-processor) -- see CLAUDE.md's "Dependabot" section.
 updates:
   - package-ecosystem: "gradle"
     directory: "/"
@@ -65,6 +68,21 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "org.jetbrains.kotlinx.binary-compatibility-validator"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "org.assertj:assertj-core"
+        update-types: ["version-update:semver-major"]
+
+      # patch-only: spring-boot-*, added for the -boot modules' auto-configuration support -- see
+      # CLAUDE.md's "Dependabot" section.
+      - dependency-name: "org.springframework.boot:spring-boot"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.springframework.boot:spring-boot-autoconfigure"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.springframework.boot:spring-boot-kafka"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.springframework.boot:spring-boot-test"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.springframework.boot:spring-boot-autoconfigure-processor"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
 
   # build-logic is a separate included build (its own Gradle project), directory-scoped here for
   # Dependabot -- but it shares the root's gradle/libs.versions.toml catalog (wired in via its own

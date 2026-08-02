@@ -1,0 +1,23 @@
+public class org/mdedetrich/spring/kafka/kotlin/springkafka/AggregatingReplyingKafkaCoroutineTemplateAutoConfiguration {
+	public fun <init> ()V
+	public fun aggregatingReplyingKafkaCoroutineTemplate (Lorg/springframework/kafka/requestreply/AggregatingReplyingKafkaTemplate;Lorg/springframework/beans/factory/ObjectProvider;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/AggregatingReplyingKafkaCoroutineTemplate;
+}
+
+public abstract interface annotation class org/mdedetrich/spring/kafka/kotlin/springkafka/BlockingIODispatcher : java/lang/annotation/Annotation {
+}
+
+public class org/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineTemplateAutoConfiguration {
+	public fun <init> ()V
+	public fun kafkaCoroutineTemplate (Lorg/springframework/kafka/core/KafkaTemplate;Lorg/springframework/beans/factory/ObjectProvider;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/KafkaCoroutineTemplate;
+}
+
+public class org/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaCoroutineTemplateAutoConfiguration {
+	public fun <init> ()V
+	public fun replyingKafkaCoroutineTemplate (Lorg/springframework/kafka/requestreply/ReplyingKafkaTemplate;Lorg/springframework/beans/factory/ObjectProvider;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/ReplyingKafkaCoroutineTemplate;
+}
+
+public class org/mdedetrich/spring/kafka/kotlin/springkafka/RoutingKafkaCoroutineTemplateAutoConfiguration {
+	public fun <init> ()V
+	public fun routingKafkaCoroutineTemplate (Lorg/springframework/kafka/core/RoutingKafkaTemplate;Lorg/springframework/beans/factory/ObjectProvider;)Lorg/mdedetrich/spring/kafka/kotlin/springkafka/RoutingKafkaCoroutineTemplate;
+}
+

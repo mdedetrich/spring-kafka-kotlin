@@ -115,6 +115,28 @@ class OrderListener {
 }
 ```
 
+## Spring Boot auto-configuration
+
+Each `spring-kafka-kotlin-X.Y` module has a sibling `spring-kafka-kotlin-X.Y-boot` module: add it and a
+`KafkaCoroutineTemplate`/`ReplyingKafkaCoroutineTemplate`/`RoutingKafkaCoroutineTemplate`/
+`AggregatingReplyingKafkaCoroutineTemplate` bean is autowired for you from whatever `KafkaTemplate`/
+`ReplyingKafkaTemplate`/`RoutingKafkaTemplate`/`AggregatingReplyingKafkaTemplate` bean you already have —
+no manual construction needed. Back off by defining your own coroutine-template bean instead; it's picked
+up in place of the auto-configured one.
+
+To customize the `blockingIODispatcher` all four use, supply your own `CoroutineDispatcher` bean annotated
+`@BlockingIODispatcher`:
+
+```kotlin
+@Bean
+@BlockingIODispatcher
+fun blockingIODispatcher(): CoroutineDispatcher = Dispatchers.IO.limitedParallelism(32)
+```
+
+`@BlockingIODispatcher` is this project's own qualifier annotation, not a Spring-provided one — Spring has
+no built-in equivalent for "the dispatcher blocking coroutine work runs on" yet (see
+[CLAUDE.md](CLAUDE.md) for the research behind that).
+
 ## Kotlin quality-of-life improvements
 
 - **Null-safety** — signatures use Kotlin nullability instead of relying on
@@ -151,16 +173,20 @@ Pick the module matching the `spring-kafka` version already pulled in by your
 Spring Boot version. Only one of these is meant to be on the classpath at a
 time; all share the same package (`org.mdedetrich.spring.kafka.kotlin`).
 
-| Module | `spring-kafka` version | Minimum JVM | Maven Central |
+Each module also has a sibling `-boot` module providing the auto-configuration
+described above — depend on that instead if you want the coroutine templates
+autowired rather than constructed by hand.
+
+| Module | `-boot` module | `spring-kafka` version | Minimum JVM |
 |---|---|---|---|
-| `spring-kafka-kotlin-2.8` | 2.8.11 | 8 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.8)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.8) |
-| `spring-kafka-kotlin-2.9` | 2.9.13 | 8 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.9)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.9) |
-| `spring-kafka-kotlin-3.0` | 3.0.15 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.0)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.0) |
-| `spring-kafka-kotlin-3.1` | 3.1.6 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.1)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.1) |
-| `spring-kafka-kotlin-3.2` | 3.2.10 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.2)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.2) |
-| `spring-kafka-kotlin-3.3` | 3.3.16 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.3)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.3) |
-| `spring-kafka-kotlin-4.0` | 4.0.6 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.0)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.0) |
-| `spring-kafka-kotlin-4.1` | 4.1.0 | 17 | [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.1)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.1) |
+| `spring-kafka-kotlin-2.8` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.8)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.8) | `spring-kafka-kotlin-2.8-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.8-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.8-boot) | 2.8.11 | 8 |
+| `spring-kafka-kotlin-2.9` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.9)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.9) | `spring-kafka-kotlin-2.9-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-2.9-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-2.9-boot) | 2.9.13 | 8 |
+| `spring-kafka-kotlin-3.0` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.0)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.0) | `spring-kafka-kotlin-3.0-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.0-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.0-boot) | 3.0.15 | 17 |
+| `spring-kafka-kotlin-3.1` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.1)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.1) | `spring-kafka-kotlin-3.1-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.1-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.1-boot) | 3.1.6 | 17 |
+| `spring-kafka-kotlin-3.2` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.2)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.2) | `spring-kafka-kotlin-3.2-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.2-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.2-boot) | 3.2.10 | 17 |
+| `spring-kafka-kotlin-3.3` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.3)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.3) | `spring-kafka-kotlin-3.3-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-3.3-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-3.3-boot) | 3.3.16 | 17 |
+| `spring-kafka-kotlin-4.0` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.0)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.0) | `spring-kafka-kotlin-4.0-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.0-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.0-boot) | 4.0.6 | 17 |
+| `spring-kafka-kotlin-4.1` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.1)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.1) | `spring-kafka-kotlin-4.1-boot` [![Maven Central](https://img.shields.io/maven-central/v/org.mdedetrich/spring-kafka-kotlin-4.1-boot)](https://central.sonatype.com/artifact/org.mdedetrich/spring-kafka-kotlin-4.1-boot) | 4.1.0 | 17 |
 
 `spring-kafka` itself is declared `compileOnly` in each module (`provided`
 scope) — the consuming application supplies it at runtime via its own
