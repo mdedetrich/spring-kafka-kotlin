@@ -255,14 +255,14 @@ public class KafkaCoroutineTemplate<K, V>(
         partition: Int,
         offset: Long,
         pollTimeout: Duration,
-    ): ConsumerRecord<K?, V?>? = withReceiveDispatcher { delegate.receive(topic, partition, offset, pollTimeout.toJavaDuration()) }
+    ): ConsumerRecord<K?, V?>? = blockingIODispatcher { delegate.receive(topic, partition, offset, pollTimeout.toJavaDuration()) }
 
     override suspend fun receive(
         requested: Collection<TopicPartitionOffset>,
         pollTimeout: Duration,
-    ): ConsumerRecords<K?, V?> = withReceiveDispatcher { delegate.receive(requested, pollTimeout.toJavaDuration()) }
+    ): ConsumerRecords<K?, V?> = blockingIODispatcher { delegate.receive(requested, pollTimeout.toJavaDuration()) }
 
-    private suspend fun <T> withReceiveDispatcher(block: () -> T): T =
+    private suspend fun <T> blockingIODispatcher(block: () -> T): T =
         if (blockingIODispatcher != null) withContext(blockingIODispatcher) { block() } else block()
 
     /**
